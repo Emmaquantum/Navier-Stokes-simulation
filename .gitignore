@@ -1,7 +1,6 @@
-smoke_plume/smoke_plume_simulation.mp4
-smoke_plume/smoke_plume_simulation.gif
-smoke_plume/simulation_results.pkl
-smoke_plume/simulation_data_pinn.csv
-smoke_plume/smoke_density_data.npy
-smoke_plume/smoke_velocity_data.npy
-digital-twins/
+smoke_plume/*.mp4
+smoke_plume/*.gif
+smoke_plume/*.pkl
+smoke_plume/*.csv
+smoke_plume/*.npy
+digital-twin/
