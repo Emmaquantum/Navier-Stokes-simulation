@@ -2,5 +2,11 @@ smoke_plume/*.mp4
 smoke_plume/*.pkl
 smoke_plume/*.csv
 smoke_plume/*.npy
+
+two_gases_smoke_plume/*.mp4
+two_gases_smoke_plume/*.pkl
+two_gases_smoke_plume/*.csv
+two_gases_smoke_plume/*.npy
+
 digital-twin/
 
