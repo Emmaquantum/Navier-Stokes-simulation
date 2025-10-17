@@ -73,9 +73,22 @@ def main():
     # --- 2. Función de paso (JIT-compilada) ---
     @flow.math.jit_compile
     def step(velocity_prev, smoke_prev, inflow_field, dt=1.0, vel_struct=velocity):
+        # Advección (u · ∇)u (término no lineal) y Fuente de Humo.
         smoke_next = flow.advect.mac_cormack(smoke_prev, velocity_prev, dt) + inflow_field
+        
+        # Difusión de humo (Término ν∇²u).
+        smoke_next = flow.diffuse.explicit(smoke_next, D * dt) # Aplica la difusión
+
+        # Fuerza de Flotación (f).
         buoyancy_force = smoke_next * (0.0, 0.1) @ vel_struct
+
+        # Advección de Velocidad (No Lineal: (u · ∇)u) + Flotación.
         velocity_tent = flow.advect.semi_lagrangian(velocity_prev, velocity_prev, dt) + buoyancy_force * dt
+
+        # Difusión/viscocidad (Término ν∇²u)
+        velocity_tent = flow.diffuse.explicit(velocity_tent, nu * dt) # Aplica la viscosidad
+
+        # Proyección Incompresible (Presión: -∇p y Condición: ∇ · u = 0)
         velocity_next, pressure = flow.fluid.make_incompressible(velocity_tent)
         return velocity_next, smoke_next
 
